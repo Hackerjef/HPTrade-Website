@@ -1,5 +1,6 @@
 <?php
-require 'openid.php';
+require '/lib/openid.php';
+require("/lib/SteamCondenser.php");
 $_STEAMAPI = "YOURSTEAMAPIKEY";
 try 
 {
@@ -29,9 +30,10 @@ try
                 // identity is something like: http://steamcommunity.com/openid/id/76561197960435530
                 // we only care about the unique account ID at the end of the URL.
                 $ptn = "/^http:\/\/steamcommunity\.com\/openid\/id\/(7[0-9]{15,25}+)$/";
-                preg_match($ptn, $id, $matches);
-                echo "User is logged in (steamID: $matches[1])\n";
-
+                preg_match($ptn, $id, $steamUser);
+                echo "User is logged in (steamID: $steamUser[1])\n";
+				$steamUser = new SteamId('00000000000000000');
+				echo "Welcome, " . $steamUser->getNickname();
         } 
     }
 } 
